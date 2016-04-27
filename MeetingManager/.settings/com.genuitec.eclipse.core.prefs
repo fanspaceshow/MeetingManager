@@ -1,0 +1,4 @@
+#Mon Apr 25 09:03:42 CST 2016
+eclipse.preferences.version=1
+validator.Checked=webapps/resources/framework/flash/fusionCharts,src/org/zframework,webapps/resources/framework/application
+validator.Unchecked=

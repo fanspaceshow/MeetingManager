@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>RichText.html</title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    
+    <!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+	<script type="text/javascript" src="$!basePath/framework/js/common/jquery-1.8.2.min.js"></script>
+<link href="$!basePath/framework/js/CKEditor/samples/css/samples.css" rel="stylesheet" type="text/css"/>
+<link href="$!basePath/framework/js/CKEditor/toolbarconfigurator/lib/codemirror/neo.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="$!basePath/framework/js/CKEditor/ckeditor.js"></script>
+<script type="text/javascript" src="$!basePath/framework/js/CKEditor/samples/js/sample.js"></script>
+<script type="text/javascript" src="$!basePath/framework/js/CKEditor/config.js"></script>
+  <script type="text/javascript">
+  
+  </script>
+  </head>
+  
+  <body>
+    This is my HTML page. <button id="btconsole">Console</button><br>
+	<div style="width:800px;height:300px">
+				<form action="$!basePath/meet/richtextController/doAdd" method="post">
+			<p>
+				<label for="editor1">Editor 1:</label>
+				<textarea cols="80" id="richtext" name="richtext" rows="10"></textarea>
+			</p>
+			<p>
+				<input type="submit" value="Submit" />
+			</p>
+		</form>
+	
+			</div>
+	<script type="text/javascript">
+	CKEDITOR.replace( 'richtext' );
+	initSample();
+</script>
+  </body>
+</html>

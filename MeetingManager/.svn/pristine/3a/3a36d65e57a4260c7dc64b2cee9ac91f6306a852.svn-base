@@ -1,0 +1,4 @@
+#Thu Apr 14 11:14:08 CST 2016
+eclipse.preferences.version=1
+validator.Checked=webapps,src/org/zframework
+validator.Unchecked=

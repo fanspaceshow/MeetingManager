@@ -1,0 +1,355 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>res_edit.html</title>
+	#style
+</head>
+ <body>
+<style type="text/css">
+.formtable{
+	width:90%;
+	height:300px	
+}
+.formtable td:nth-child(1){
+   width:100px;
+}
+.formtable td:nth-child(2){
+   width:160px;
+}
+.formtable td:nth-child(3){
+   width:100px;
+}
+
+</style> 
+
+<link href="$!basePath/framework/css/CKEditor/samples.css" rel="stylesheet" type="text/css"/>
+<link href="$!basePath/framework/css/CKEditor/neo.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="$!basePath/framework/js/CKEditor/ckeditor.js"></script>
+<script type="text/javascript" src="$!basePath/framework/js/CKEditor/sample.js"></script>
+<script type="text/javascript" src="$!basePath/framework/js/CKEditor/config.js"></script>
+
+<script type="text/javascript">
+$(function () {
+            var factory = $('#factory').combobox({
+                url:'$!basePath/meet/factoryController/factorynameList', 
+                valueField: 'id',
+                textField: 'text'
+            });        
+        });
+		
+$(function () {
+            var meettype = $('#meettype').combobox({
+                url:'$!basePath/meet/meettypeController/showtypelist', 
+                valueField: 'id',
+                textField: 'text'
+            });        
+        });
+$(function () {
+            var meetfreq = $('#meetfreq').combobox({
+                url:'$!basePath/meet/meetfreqController/showtypelist', 
+                valueField: 'id',
+                textField: 'text'
+            });        
+        });
+$(function () {
+            var room = $('#room').combobox({
+                url:'$!basePath/meet/roomController/roomnumList', 
+                valueField: 'id',
+                textField: 'text'
+            });        
+        });
+</script>
+
+ <script type="text/javascript">	
+ 	var oCommAdd = {
+ 		initForm : function(){
+ 			$("#meettableForm").form({
+ 				url:'$!basePath/meet/roomarrController/doAdd',
+ 				onSubmit: function(){
+			    	var pass = $('#meettableForm').form("validate");
+			    	if(pass){
+			    		$("#ok").linkbutton("loading");
+			    	}
+			    	return pass; 
+			    },
+			    success:function(data){
+			   		var result = jQuery.parseJSON(data);   
+			        if(result.success == true){
+			       		top.Notiy.success("添加成功!");
+						saveInvitedPeople();
+												
+			        }else{
+			        	top.Dialog.alert("提示",result.error,"error");
+			        }
+			        $("#ok").linkbutton("reset");
+			    }
+ 			});
+ 		},
+ 		ok : function(){
+ 			$('#meettableForm').submit();
+			
+ 		},
+ 		cancel : function(){
+ 			removePanel();
+ 		}
+ 	};
+ 	$(function(){
+ 		oCommAdd.initForm();
+ 	});
+	function removePanel(){
+	        var jq = top.jQuery;
+			var domobj = jq("#mainTabs")
+            var tab = domobj.tabs('getSelected');
+            if(tab){
+                var index = domobj.tabs('getTabIndex',tab);
+                domobj.tabs('close',index);
+            }
+        }
+		
+	function saveInvitedPeople(){
+	      $.ajax({
+  			type: 'GET',
+  			url: "$!basePath/meet/responseController/doInsert",
+  			success: function(data){
+			        var result = jQuery.parseJSON(data);
+					console.log(result);
+			        if(result.success == true){
+			       		top.Notiy.success("Ajax成功!");
+                        removePanel();						
+			        }else{
+			        	top.Dialog.alert("提示",result.error,"error");
+			        }
+				}			
+			})		   
+	}
+ </script>
+ <script type="text/javascript">
+ var winUpload = new Windows("upload_down");
+ $(function() {
+			//initDataGrid();
+			initWindows();
+			initToolbar();
+		});
+ function initWindows() {
+			winUpload.windows({
+				title : "新增会议安排申请",
+				width : 630,
+				height : 470,
+				modal : true,
+				cache : false,
+				closed : true,
+				iconCls : 'icon-assets-computer-add',
+				href : "$!basePath/meet/upload",
+				onClose : function() {
+					if (winUpload.getReturnValue() == "true") {
+						$('#dgCommList').datagrid("reload");
+					}
+				}
+			});
+		} 
+ 
+ function initToolbar() {
+ $("#upload").click(function() {
+				winUpload.open();
+			});
+ }
+ </script>
+ <div id="dgCommList-toolbar" class="datagrid-toolbar">
+		<table cellpadding="0" cellspacing="0" style="width:100%">
+			<tr>
+				<td style="padding-left:2px;text-align:right;padding-right:2px">
+				 <a id="ok" class="easyui-linkbutton" data-options="iconCls:'icon-ok',plain:true" href="javascript:void(0)" style="float: left;" onclick="oCommAdd.ok()">确定</a>
+	 			<a id="cancel" class="easyui-linkbutton" data-options="iconCls:'icon-cancel',plain:true" href="javascript:void(0)" style="float: left;" onclick="oCommAdd.cancel()">取消</a>
+		<a id="btnAjax" href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-assets-computer-delete',plain:true" style="float: left;">AJAX</a>
+		</td>
+				<td >
+					<div style="display:none;"><input type="hidden" class="easyui-searchbox" data-options="prompt:'请输入查询内容',menu:'#ss_mm'"></input></div>
+					
+				</td>
+			</tr>
+		</table>		
+	</div>
+ 
+ 
+ <div class="easyui-layout" data-options="fit:true">
+	 <div data-options="region:'center',border:false">
+	 	 	<form id="meettableForm" method="post" style="padding-top:10px;padding-left: 20px;" action="'$!basePath/meet/roomarrController/doAdd'">
+	 		<table class="formtable">
+			<tr>
+			  <td>主题：</td>
+			  <td>
+			     <input type="text" class="easyui-validatebox" name="topic" maxlength="50" data-options="required:true" style="width: 90%;" />
+			  </td>
+			  <td>工厂：</td>
+			  <td style="width:90px">
+			     <select id="factory" class="easyui-combobox" name="factoryid" style="width:80%;" 
+			     data-options="editable:false,width:130,required:true" valueField="id" textField="text">
+                 <option selected="selected" >--请选择--</option>
+							</select>
+			  </td>
+			  <td style="width:142px"></td>
+			</tr>
+			<tr>
+			  <td>会议室：</td>
+			  <td>
+			     <select id="room" class="easyui-combobox" name="roomid" style="width:80%;" 
+							data-options="editable:false,width:130,required:true" valueField="id" textField="text">
+                             <option selected="selected" >--请选择--</option>
+							</select>
+			  </td>
+			  <td>会议种类：</td>
+			  <td>
+			    <select id="meettype" class="easyui-combobox" name="meettype" style="width:60%;" 
+							data-options="editable:false,width:130,required:true" valueField="id" textField="text">
+                             <option selected="selected" >--请选择--</option>
+							</select> 
+			  </td>
+			   <td></td>
+			</tr>
+			<tr>
+			  <td>会议持续时间：</td>
+			  <td>
+			    <input type="text" class="easyui-validatebox" name="meetduration" maxlength="11" data-options="required:true" style="width: 90%;" />
+			  </td>
+			  <td>会议所需资源：</td>
+			  <td>
+			  <select id="meettype" class="easyui-combobox" name="meetres" style="width:60%;" 
+							data-options="editable:false,width:130,required:true" valueField="id" textField="text">
+                             <option selected="selected" >--请选择--</option>
+							</select>
+			  </td>
+			  <td></td>	  
+			</tr>
+			<tr>
+			  <td>预订人：</td>
+			  <td>
+			  <input type="text" class="easyui-validatebox" name="reserver" maxlength="50" data-options="required:true" style="width: 90%;" />
+			  </td>
+			  <td>受邀人员：</td>
+			  <td>
+			  <input type="text" class="easyui-validatebox" name="invited" maxlength="11" data-options="required:true" style="width: 90%;" />
+			  </td>
+			   <td></td>
+			</tr>
+			<tr>
+				<td>重复预定：</td>
+			  <td><label>是</label>
+							<input type="radio" name="rereserve" value="0" checked="checked"/>
+							<label>否</label>
+							<input type="radio" name="rereserve" value="1"/>
+			  </td>
+				
+			  <td>时间范围：</td>
+			  <td>
+			    <!--<input type="text" class="easyui-datetimebox" name="timeperiod"  data-options="required:true,showSeconds:true" value="1/21/2016 08:00" style="width:220px" />-->
+				<input type="text" class="easyui-validatebox" name="starttime" maxlength="50" data-options="required:true" style="width: 90%;" />
+			  </td>
+			  <td>
+			  <input type="text" class="easyui-validatebox" name="endtime" maxlength="50" data-options="required:true" style="width: 117px;" />
+			  </td>	
+			 
+			</tr>
+			<tr>
+			  <td>会议频率：</td>
+			  <td>
+			  <select id="meetfreq" class="easyui-combobox" name="meetfreq" style="width:80%;" 
+							data-options="editable:false,width:130,required:true" valueField="id" textField="text">
+                             <option selected="selected" >--请选择--</option>
+							</select> 
+				
+				<td>日期范围：</td>
+			  <td>
+						<input id="d1" type="text" name="startdate" class="easyui-datebox" required="required" style="width: 130%;"/>						
+						</td>
+						<td>
+						<input id="d2" type="text" name="enddate" class="easyui-datebox" required="required" style="width: 130%;"/>
+						</td>
+				
+			  
+			  </td>			  
+			  <td></td>
+			</tr>
+			<tr>
+			   <td>上传：</td>
+			   <td>
+			      <a id="upload" class="easyui-linkbutton" data-options="iconCls:'icon-arrow-up'" href="javascript:void(0)" >上传</a>
+			   </td>
+			</tr>
+			<tr>			  
+			  <td>会议内容概要：</td>
+			  <td colspan="4">
+			  <textarea class="easyui-textarea" rows="3" cols="21" name="contentsummary" style="width: 96%;"></textarea>
+			  </td>
+			</tr>
+			
+			<tr colspan="4">
+			<td>
+			
+			<div class="grid-container">
+		<div class="content grid-width-100">
+			<section id="sample-customize">
+				<h2>Customize Your Editor</h2>
+				<p>Modular build and <a href="http://docs.ckeditor.com/#!/guide/dev_configuration">numerous configuration options</a> give you nearly endless possibilities to customize CKEditor. Replace the content of your <code><a href="../config.js">config.js</a></code> file with the following code and refresh this page (<strong>remember to clear the browser cache</strong>)!</p>
+		<pre class="cm-s-neo CodeMirror"><code><span style="padding-right: 0.1px;"><span class="cm-variable">CKEDITOR</span>.<span class="cm-property">editorConfig</span> <span class="cm-operator">=</span> <span class="cm-keyword">function</span>( <span class="cm-def">config</span> ) {</span>
+<span style="padding-right: 0.1px;"><span class="cm-tab">	</span><span class="cm-variable-2">config</span>.<span class="cm-property">language</span> <span class="cm-operator">=</span> <span class="cm-string">'es'</span>;</span>
+<span style="padding-right: 0.1px;"><span class="cm-tab">	</span><span class="cm-variable-2">config</span>.<span class="cm-property">uiColor</span> <span class="cm-operator">=</span> <span class="cm-string">'#F7B42C'</span>;</span>
+<span style="padding-right: 0.1px;"><span class="cm-tab">	</span><span class="cm-variable-2">config</span>.<span class="cm-property">height</span> <span class="cm-operator">=</span> <span class="cm-number">300</span>;</span>
+<span style="padding-right: 0.1px;"><span class="cm-tab">	</span><span class="cm-variable-2">config</span>.<span class="cm-property">toolbarCanCollapse</span> <span class="cm-operator">=</span> <span class="cm-atom">true</span>;</span>
+<span style="padding-right: 0.1px;">};</span></code></pre>
+			</section>
+
+			<section>
+				<h2>Toolbar Configuration</h2>
+				<p>If you want to reorder toolbar buttons or remove some of them, check <a href="toolbarconfigurator/index.html">this handy tool</a>!</p>
+			</section>
+
+			<section>
+				<h2>More Samples!</h2>
+				<p>Visit the <a href="http://sdk.ckeditor.com">CKEditor SDK</a> for a huge collection of samples showcasing editor features, with source code readily available to copy and use in your own implementation.</p>
+			</section>
+
+			<section>
+				<h2>Developer's Guide</h2>
+				<p>The most important resource for all developers working with CKEditor, integrating it with their websites and applications, and customizing to their needs. You can start from here:</p>
+				<ul>
+					<li><a href="http://docs.ckeditor.com/#!/guide/dev_installation">Getting Started</a> &ndash; Explains most crucial editor concepts and practices as well as the installation process and integration with your website.</li>
+					<li><a href="http://docs.ckeditor.com/#!/guide/dev_advanced_installation">Advanced Installation Concepts</a> &ndash; Describes how to upgrade, install additional components (plugins, skins), or create a custom build.</li>
+				</ul>
+					<p>When you have the basics sorted out, feel free to browse some more advanced sections like:</p>
+				<ul>
+					<li><a href="http://docs.ckeditor.com/#!/guide/dev_features">Functionality Overview</a> &ndash; Descriptions and samples of various editor features.</li>
+					<li><a href="http://docs.ckeditor.com/#!/guide/plugin_sdk_intro">Plugin SDK</a>, <a href="http://docs.ckeditor.com/#!/guide/widget_sdk_intro">Widget SDK</a>, and <a href="http://docs.ckeditor.com/#!/guide/skin_sdk_intro">Skin SDK</a> &ndash; Useful when you want to create your own editor components.</li>
+				</ul>
+			</section>
+
+			<section>
+				<h2>CKEditor JavaScript API</h2>
+				<p>CKEditor boasts a rich <a href="http://docs.ckeditor.com/#!/api">JavaScript API</a> that you can use to adjust the editor to your needs and integrate it with your website or application.</p>
+			</section>
+		</div>
+	</div>
+			
+			</td>
+			</tr>
+				</table>
+		</form>
+	 </div>
+	 <!--Change Button Text-->
+	 <!-- <div data-options="region:'south',border:false">
+	 	<div class="dialog-button">
+	 			<a id="ok" class="easyui-linkbutton" data-options="iconCls:'icon-ok'" href="javascript:void(0)" onclick="removePanel()">确定</a>
+	 			<a id="cancel" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" href="javascript:void(0)" onclick="oCommAdd.cancel()">取消</a>
+	 		</div>
+	 	</div> -->
+		
+ </div>
+ 
+ 
+ 
+<script type="text/javascript">
+	initSample();
+</script>
+
+  </body>
+</html>

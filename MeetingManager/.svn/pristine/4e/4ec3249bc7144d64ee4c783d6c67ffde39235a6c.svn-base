@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>showdatal.html</title>
+		#style
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+    <meta http-equiv="description" content="this is my page">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    
+    <!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+<style type="text/css">
+table{
+width: 100%;
+}
+/*****************样式2*******************/
+tr,td{
+	font-size:13px;
+	}
+	
+table.datagrid2{
+border-collapse: collapse; 
+}
+table.datagrid2 th{
+text-align: left;
+background: #F4F4F4;
+padding: 3px;
+border: none;
+}
+table.datagrid2 td{
+padding: 3px;
+border: none;
+}
+
+table.datagrid2 tr:nth-child(odd){
+   background-color: #F5F5F5;
+ }
+
+table.datagrid2 tr:hover{
+background: #9cf;
+}
+	
+.table-striped tbody tr:nth-child(odd) td,{
+	
+	}
+
+
+</style> 
+<script type='text/javascript'>
+$(document).ready(
+	  function(){
+	  $("body br:first").remove()
+      }
+	)
+$(document).ready(function(){
+		  $('#submit').click(function(){
+		  　for( instance in CKEDITOR.instances ){ CKEDITOR.instances[instance].updateElement(); }
+		  })
+		  $('#myForm').submit(function(){
+             $.ajax({
+                url: $('#myForm').attr('action'),
+                type: 'post',
+                data : $('#myForm').serialize(),
+                success: function(data){
+				console.log(data)
+                   console.log('myForm submitted.');
+				   var result = jQuery.parseJSON(data);
+				   if(result.success == true){
+			        	top.Notiy.success("修改成功!");
+			         }else{
+					 top.Dialog.alert("提示",result.error,"error");
+					 }				   
+                  setTimeout(function(){return redirect()},3000);				   
+                 }
+            });
+                return false;
+             });
+		}
+		)
+		
+		function redirect() {
+             window.location.replace("$!basePath/meet/roomarrController/edit/12/1");
+            return false;
+        }
+		function redirectEdit(){
+		    window.location.replace("$!basePath/meet/roomarrController/edit/12/0");
+            return false;
+		}
+		function removePanel(){
+	        var jq = top.jQuery;
+			var domobj = jq("#mainTabs")
+            var tab = domobj.tabs('getSelected');
+            if(tab){
+                var index = domobj.tabs('getTabIndex',tab);
+                domobj.tabs('close',index);
+            }
+        }
+</script>
+  </head>
+  
+  <body>
+  <div id="dgCommList-toolbar" class="datagrid-toolbar">
+		<table cellpadding="0" cellspacing="0" style="width:100%">
+			<tr>
+				<td style="padding-left:2px;text-align:right;padding-right:2px">
+				 <a id="ok" class="easyui-linkbutton" data-options="iconCls:'icon-contacts-edit',plain:true" href="javascript:void(0)" style="float: left;" onclick="return redirectEdit()">编辑</a>
+	 			
+				<a id="cancel" class="easyui-linkbutton" data-options="iconCls:'icon-cancel',plain:true" href="javascript:void(0)" style="float: left;" onclick="removePanel()">关闭</a>
+		<a id="btnAjax" href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-assets-computer-delete',plain:true" style="float: left;">AJAX</a>
+		</td>
+				<td >
+					<div style="display:none;"><input type="hidden" class="easyui-searchbox" data-options="prompt:'请输入查询内容',menu:'#ss_mm'"></input></div>
+					
+				</td>
+			</tr>
+		</table>		
+	</div>
+	<input type="hidden" name="id" value="$!pro.id"/>
+    <table class="datagrid2">
+<tbody>
+  <tr>
+    <td style="width:120px">主题：</td>
+    <td>$!pro.topic</td>
+    <td>工厂：</td>
+    <td>$!pro.factoryid</td>
+  </tr>
+  <tr>
+    <td>会议室：</td>
+    <td>$!pro.roomid</td>
+    <td>会议种类：</td>
+    <td>$!pro.meettype</td>
+  </tr>
+  <tr>
+    <td>会议持续时间：</td>
+    <td>$!pro.meetduration</td>
+    <td>会议所需资源：</td>
+    <td>$!pro.meetres</td>
+  </tr>
+  <tr>
+    <td>预订人：</td>
+    <td>$!pro.reserver</td>
+    <td>受邀人员：</td>
+    <td>$!pro.invited</td>
+  </tr>
+  <tr>
+    <td>重复预定：</td>
+    <td>#if( $!pro.rereserve == '0' )
+	      是
+		#else
+		  否
+		#end
+	</td>
+    <td>时间范围：</td>
+    <td>$!pro.starttime
+	$!pro.endtime</td>
+  </tr>
+  <tr>
+    <td>会议频率：</td>
+    <td>$!pro.meetfreq</td>
+    <td>日期范围：</td>
+    <td>$!pro.startdate
+	$!pro.enddate
+	</td>
+  </tr>
+  <tr>
+    <td>上传：</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>会议内容概要：</td>
+    <td colspan="3">$!pro.contentsummary</td>    
+  </tr>
+	</tbody></table>
+	
+	<div style="width:790px;height:400">
+	<h3>会议纪要</h3>
+	    $!pro.meetrecord
+	</div>
+  </body>
+</html>

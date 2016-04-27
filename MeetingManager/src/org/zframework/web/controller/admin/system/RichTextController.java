@@ -1,0 +1,49 @@
+package org.zframework.web.controller.admin.system;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+
+import net.sf.json.JSONObject;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.zframework.core.web.support.WebResult;
+import org.zframework.web.controller.BaseController;
+import org.zframework.web.entity.system.RichTextData;
+import org.zframework.web.service.admin.system.RichTextService;
+
+@Controller
+@RequestMapping("/meet/richtextController")
+public class RichTextController extends BaseController<RichTextData> {
+	@Autowired
+	private RichTextService richtextservice;
+	
+	@RequestMapping(method={RequestMethod.GET})
+	public String index(){
+		return "admin/system/richtext/richtext";
+  }
+	
+	/**
+	 * 保存数据
+	 * @param request 用于记录日志
+	 * @param comm 数据字典对象
+	 * @param result 
+	 * @return
+	 */
+	@RequestMapping(value="/doAdd",method={RequestMethod.POST})
+	@ResponseBody
+	public JSONObject doAdd(HttpServletRequest request,@Valid @ModelAttribute("pro")RichTextData pro,BindingResult result){
+		System.out.println("into richtext doAdd");
+		if(result.hasErrors()){
+			
+			return WebResult.error("请按要求填写表单!");
+		}else{
+			return richtextservice.executeAdd(request, pro,getCurrentUser());
+		}
+	}
+}

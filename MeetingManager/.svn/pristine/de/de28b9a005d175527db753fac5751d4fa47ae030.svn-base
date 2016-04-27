@@ -1,0 +1,123 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+ <script type="text/javascript" src="$!basePath/framework/js/common/jquery-1.8.2.min.js"></script>
+ <!--#style<script type="text/javascript" src="$!basePath/framework/js/common/jquery.easyui.min.js"></script>-->
+ <script type="text/javascript" src="$!basePath/framework/js/common/jquery.easyui.min.js"></script>
+<title>hello</title>
+
+</head>
+<body class="easyui-layout">
+<script type="text/javascript">
+var winUpload = new Windows("upload_down");
+$(document).ready(   
+   $('#upload').click(function(){
+   //进度条功能开始运行，读取进度。
+  // var size = $("input[name='uploadFile']").files[0].size; 
+	var inputfile = document.getElementsByName("uploadFile")[0].files;
+	 if(inputfile.length==0){
+	     return;
+	};
+	 console.log(inputfile[0].size)  
+	 if(!(inputfile[0].size>800000000)){
+	// $("#form1").submit();
+	   start();
+	   return true;	
+	 }else{	
+       top.Dialog.alert("提示","你上传文件不能超过800M!","error");
+	  return false;	 
+	 }	
+ } 
+)
+);  
+		function start(){
+			var value = $('#p').progressbar('getValue');
+			if (value < 100){
+			   $.ajax({
+  			type: 'post',
+  			url: "$!basePath/meet/progressController/upfile/progress",
+  			success: function(data){
+			        console.log(data)
+			        var result = jQuery.parseJSON(data);
+					console.log(result);
+					if(result.fileprogress=="success"){
+					  value=100
+					}else{
+					  value+=parseInt(result.fileprogress)
+					}					
+					console.log(value)
+			     $('#p').progressbar('setValue', value);
+				}			
+			})
+				//value += Math.floor(Math.random() * 10);
+				//$('#p').progressbar('setValue', value);onchange="getFileSize(this)"
+				setTimeout(arguments.callee, 100);
+			}
+		};
+				
+/**function getFileSize(fileObj){    
+        //不能使用new Image，ie下报无dynsrc属性  
+   // var img1 = document.getElementById('img1');  
+   // img1.dynsrc=fileObj.value;  
+        //img1.fileSize：IE ， fileObj.files[0].fileSize：chrome， fileObj.files[0].size：FF 
+		//img1.fileSize || fileObj.files[0].fileSize ||
+    console.log(fileObj)		
+    var size = fileObj.files[0].size;  
+    console.log("size1 : "+size)
+    return size;	
+    //alert(size);    
+	//top.Dialog.alert("提示","你上传文件不能超过800M!","error");
+} */   
+	</script>
+ $!content
+ $!uploadEx
+     <div>
+        <form  id="form1" enctype='multipart/form-data'  method="post" action="$!basePath/meet/upload/uploaddo" target="aa">
+            <input type="file" name="uploadFile"  />          
+			<button id="upload" type="submit">提交</button>
+        </form>
+		
+    </div>
+    
+    <div>
+        <form  enctype='multipart/form-data'  method="post" action="$!basePath/meet/upload/importdo" target="aa">
+            <input type="file" name="excelFile" size="300000"/>
+            <button>Eecel文件导入</button>
+        </form>
+    </div>
+    <iframe name="aa" src="" style="display:none"></iframe>	
+   <table id="persontable" border="1">
+            <tr>
+                <td>
+                    文件名
+                </td>
+                <td>
+                   下载
+                </td>
+                
+            </tr>
+       </table>
+	   
+	   <div style="margin:20px 0;">
+		<a href="#" class="easyui-linkbutton" onclick="start()">Start</a>
+	</div>
+	<div id="p" class="easyui-progressbar" style="width:400px;"></div>
+	
+	<!--http://www.jeasyui.com/tutorial/form/form1.php-->
+	<div class="easyui-panel" title="Ajax Form" style="width:300px;padding:10px;">
+		<form id="ff" action="$!basePath/meet/upload/uploaddo" method="post" enctype="multipart/form-data">
+			<table>				
+				<tr>
+					<td>File:</td>
+					<td><input name="file" class="f1 easyui-filebox"></input></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td><input type="submit" value="Submit"></input></td>
+				</tr>
+			</table>
+		</form>
+	</div>
+</body>
+</html>

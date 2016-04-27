@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>RichText.html</title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    
+    <!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+	<script type="text/javascript" src="$!basePath/framework/js/common/jquery-1.8.2.min.js"></script>
+	<!--<script type="text/javascript" src="$!basePath/framework/js/common/jquery.form.min.js"></script>-->
+<link href="$!basePath/framework/js/CKEditor/samples/css/samples.css" rel="stylesheet" type="text/css"/>
+<link href="$!basePath/framework/js/CKEditor/toolbarconfigurator/lib/codemirror/neo.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="$!basePath/framework/js/CKEditor/ckeditor.js"></script>
+<script type="text/javascript" src="$!basePath/framework/js/CKEditor/samples/js/sample.js"></script>
+<script type="text/javascript" src="$!basePath/framework/js/CKEditor/config.js"></script>
+  <script type="text/javascript">
+  $(document).ready(function(){
+      
+  })
+  // wait for the DOM to be loaded 
+  /**      $(document).ready(function(){ 
+		
+		$("#submit").click(function() {
+            // bind 'myForm' and provide a simple callback function 
+			var options = {
+                    url: "$!basePath/meet/richtextController/doAdd",
+                    target: "#aa",
+                    success: function (data) {
+				 console.log(data)
+				 //var result = jQuery.parseJSON(data);
+                 //console.log(result)				 
+			   		if(data.success == true){
+			        	top.Notiy.success("修改成功!");
+			         }else{
+					 top.Dialog.alert("提示",data.error,"error");
+					 }
+                }
+                };
+                $('#myForm').ajaxForm(options);
+           
+			});
+        }); */
+		
+		$(document).ready(function(){
+		  $('#submit').click(function(){
+		  　for( instance in CKEDITOR.instances ){ CKEDITOR.instances[instance].updateElement(); }
+		  })
+		  $('#myForm').submit(function(){
+             $.ajax({
+                url: $('#myForm').attr('action'),
+                type: 'post',
+                data : $('#myForm').serialize(),
+                success: function(data){
+				console.log(data)
+                   console.log('myForm submitted.');
+				   var result = jQuery.parseJSON(data);
+				   if(result.success == true){
+			        	top.Notiy.success("修改成功!");
+			         }else{
+					 top.Dialog.alert("提示",result.error,"error");
+					 }
+				   //return redirect();				   
+                 }
+            });
+                return false;
+             });
+		}
+		)
+		
+		function redirect() {
+             window.location.replace("http://www.baidu.com");
+            return false;
+        }
+		//url : '$!basePath/meet/richtextController/doAdd', // or whatever
+				 //type: 'post',dataType : 'json',
+  </script>
+  </head>
+  
+  <body>
+    This is my HTML page. <button id="btconsole">Console</button><br>
+	<div style="width:800px;height:300px">
+				<form id="myForm" action="$!basePath/meet/richtextController/doAdd" method="post" target="aa">
+			<p>
+				<label for="richtext">Editor 1:</label>
+				<textarea cols="80" id="richtext" name="richtext" rows="100"></textarea>
+			</p>
+			<p>
+				<input id="submit" type="submit" value="Submit" />
+			</p>
+		</form>
+	
+			</div>
+			 <iframe id="aa" name="aa" src="" style="display:none"></iframe>	
+	<script type="text/javascript">
+	CKEDITOR.replace( 'richtext' );
+	  initSample();		
+</script>
+  </body>
+</html>

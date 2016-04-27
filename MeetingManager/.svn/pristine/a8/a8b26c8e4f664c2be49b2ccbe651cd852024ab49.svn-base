@@ -1,0 +1,470 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>res_list.html</title>
+	#style
+	</head>
+	   <!-- <link id="mainStyle" href="$!basePath/framework/css/easyui/$!theme/easyui.css" rel="stylesheet" type="text/css"/>
+	   	<link href="$!basePath/framework/css/easyui/icon.css" rel="stylesheet" type="text/css"/> -->
+	
+	<style> 
+			table{
+width: 100%;
+}
+div.datagrid_div{
+width: 100%;
+border: 1px solid #999;
+
+}
+/*****************样式2*******************/
+tr,td{
+	font-size:12px;
+	}
+	
+table.datagrid2{
+border-collapse: collapse; 
+}
+table.datagrid2 th{
+text-align: left;
+background: #F4F4F4;
+padding: 3px;
+border: none;
+}
+table.datagrid2 td{
+padding: 3px;
+border: none;
+}
+	
+tr:hover,
+tr.hover{
+background: #9cf;
+}
+	
+.table-striped tbody tr:nth-child(odd) td,{
+	
+	}
+table.datagrid2 tr:nth-child(odd){
+   background-color: #F5F5F5;
+ }
+</style>	
+	<script type="text/javascript">
+	$(document).ready(
+	  function(){
+	  $("body br:first").remove()
+      }
+	)
+	$(function(){
+	$("#btnAjax").click(
+			function(){
+			$.ajax({
+  			type: 'POST',
+  			url: "$!basePath/meet/roomarrController/getajax",
+  			success: function(data){
+			var result = jQuery.parseJSON(data);   
+			        if(result.success == true){
+			       		top.Notiy.success("Ajax成功!");		        		
+			        }else{
+			        	top.Dialog.alert("提示",result.error,"error");
+			        }
+				}
+			}
+		)
+	}		 
+)
+})
+	
+	</script>
+	<script type="text/javascript">
+/**	function addTab(domobj,title, url){
+			if ($('#FrameWorkWindows').tabs('exists', title)){
+				$('#FrameWorkWindows').tabs('select', title);
+			} else {
+				var content = '<iframe scrolling="auto" frameborder="0"  src="'+url+'" style="width:100%;height:100%;"></iframe>';
+				$('#FrameWorkWindows').tabs('add',{
+					title:title,
+					content:content,
+					closable:true
+				});
+			}
+		}*/
+		var _iframe;
+		var _div;
+		$(document).ready(
+	function(){ 
+	$("#btnAdd").click(function(){
+  /*      _iframe = window.parent;  
+		console.log(_iframe)
+        //var _div =_iframe.document.getElementById('mainTabs');  
+		_div =$("#mainTabs",parent.document)
+        console.log(_div)_div,*/
+		addTab('新增会议安排','$!basePath/meet/roomarrController/add')
+		}
+		)
+    }  
+) 
+		function createFrame(oUrl){	
+	      return "<iframe id=\"frameContent\" src=\""+oUrl+"\" frameborder=\"0\" width=\"100%\" height=\"100%\" scrolling=\"auto\" marginheight=\"0\" marginwidth=\"0\" frameSpacing=\"0\"></iframe>"
+        }
+/**		function addTab(domobj,title, url){			
+				//var content = '<iframe scrolling="auto" frameborder="0"  src="'+url+'" style="width:100%;height:100%;"></iframe>';
+				domobj.tabs('add',{
+					title:title,
+					content:createFrame(url),
+					closable:true
+				});
+				
+			console.log("99999")
+		}
+	*/	
+	 
+	 function addTab(title, url){
+                var jq = top.jQuery;
+				var domobj = jq("#mainTabs");
+				if (domobj.tabs('exists', title)){
+				domobj.tabs('select', title);
+			} else {				 
+				domobj.tabs('add',{
+					title:title,
+					content:createFrame(url),
+					closable:true,
+					icon:'icon-assets-computer-add'
+				});	
+			}				
+		}
+
+    </script> 
+	 <body class="easyui-layout">
+	<div id="dgCommList-toolbar" class="datagrid-toolbar">
+		<table cellpadding="0" cellspacing="0" style="width:100%">
+			<tr>
+				<td style="padding-left:2px;text-align:right;padding-right:2px">
+				  <a id="btnAdd" href="javascript:void(0)" class="easyui-linkbutton" 
+				   data-options="iconCls:'icon-assets-computer-add',plain:true" style="float: left;">会议发起</a>
+					<a id="btnEdit" href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-assets-computer-edit',plain:true" style="float: left;">修改</a>
+					 <a id="btnRemove" href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-assets-computer-delete',plain:true" style="float: left;">删除</a>
+		<a id="btnAjax" href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-assets-computer-delete',plain:true" style="float: left;">AJAX</a>
+		</td>
+				<td >
+					<div style="display:none;"><input type="hidden" class="easyui-searchbox" data-options="prompt:'请输入查询内容',menu:'#ss_mm'"></input></div>
+					
+				</td>
+			</tr>
+		</table>		
+	</div>
+	
+	<table class="datagrid2">
+<tr>
+	<th style="width:80px">时间：</th>
+	<th>周一</th>
+	<th>周二</th>
+	<th>周三</th>
+<th>周四</th>	
+<th>周五</th>
+<th>周六</th>
+<th>周日</th>
+</tr>
+<tr>
+<td>07:00</td>
+<td>905.25</td>
+<td>3.25</td>
+	<td>CBOT大豆</td>
+<td>905.25</td>
+<td>3.25</td>
+	<td>905.25</td>
+<td>3.25</td>
+	</tr>
+	
+<tr>
+<td>07:30</td>
+<td>381.25</td>
+<td>1.25</td>
+	<td>CBOT大豆</td>
+<td>905.25</td>
+<td>3.25</td>
+	<td>905.25</td>
+<td>3.25</td>
+</tr>
+		
+<tr>
+<td>08:00</td>
+<td>548.5</td>
+<td>-1</td>
+		<td>CBOT大豆</td>
+<td>905.25</td>
+<td>3.25</td>
+	<td>905.25</td>
+<td>3.25</td>
+</tr>
+	
+	<tr>
+<td>08:30</td>
+<td>15645</td>
+<td>3669</td>
+			<td>CBOT大豆</td>
+<td>905.25</td>
+<td>3.25</td>
+	<td>905.25</td>
+<td>3.25</td>
+</tr>
+	
+  	<tr>
+      <td>09:00</td>
+      <td></td>
+      <td></td>
+	  <td></td>
+      <td></td>
+      <td></td>
+	  <td></td>
+      <td></td>
+</tr>
+  
+  <tr>
+      <td>09:30</td>
+      <td></td>
+      <td></td>
+	  <td></td>
+      <td></td>
+      <td></td>
+	  <td></td>
+      <td></td>
+</tr>
+  
+  <tr>
+      <td>10:00</td>
+      <td></td>
+      <td></td>
+	  <td></td>
+      <td></td>
+      <td></td>
+	  <td></td>
+      <td></td>
+</tr>
+  
+  <tr>
+      <td>10:30</td>
+      <td></td>
+      <td></td>
+	  <td></td>
+      <td></td>
+      <td></td>
+	  <td></td>
+      <td></td>
+</tr>
+  <tr>
+      <td>11:00</td>
+      <td></td>
+      <td></td>
+	  <td></td>
+      <td></td>
+      <td></td>
+	  <td></td>
+      <td></td>
+</tr>
+  <tr>
+      <td>11:30</td>
+      <td></td>
+      <td></td>
+	  <td></td>
+      <td></td>
+      <td></td>
+	  <td></td>
+      <td></td>
+</tr>
+  <tr>
+      <td>12:00</td>
+      <td></td>
+      <td></td>
+	  <td></td>
+      <td></td>
+      <td></td>
+	  <td></td>
+      <td></td>
+</tr>
+  <tr>
+      <td>12:30</td>
+      <td></td>
+      <td></td>
+	  <td></td>
+      <td></td>
+      <td></td>
+	  <td></td>
+      <td></td>
+</tr>
+  
+  <tr>
+      <td>13:00</td>
+      <td></td>
+      <td></td>
+	  <td></td>
+      <td></td>
+      <td></td>
+	  <td></td>
+      <td></td>
+</tr>
+  <tr>
+      <td>13:30</td>
+      <td></td>
+      <td></td>
+	  <td></td>
+      <td></td>
+      <td></td>
+	  <td></td>
+      <td></td>
+</tr>
+  <tr>
+      <td>14:00</td>
+      <td></td>
+      <td></td>
+	  <td></td>
+      <td></td>
+      <td></td>
+	  <td></td>
+      <td></td>
+</tr>
+  <tr>
+      <td>14:30</td>
+      <td></td>
+      <td></td>
+	  <td></td>
+      <td></td>
+      <td></td>
+	  <td></td>
+      <td></td>
+</tr>
+  <tr>
+      <td>15:00</td>
+      <td></td>
+      <td></td>
+	  <td></td>
+      <td></td>
+      <td></td>
+	  <td></td>
+      <td></td>
+</tr>
+  
+    <tr>
+      <td>15:30</td>
+      <td></td>
+      <td></td>
+	  <td></td>
+      <td></td>
+      <td></td>
+	  <td></td>
+      <td></td>
+</tr>
+  
+    <tr>
+      <td>16:00</td>
+      <td></td>
+      <td></td>
+	  <td></td>
+      <td></td>
+      <td></td>
+	  <td></td>
+      <td></td>
+</tr>
+  
+    <tr>
+      <td>16:30</td>
+      <td></td>
+      <td></td>
+	  <td></td>
+      <td></td>
+      <td></td>
+	  <td></td>
+      <td></td>
+</tr>
+  
+    <tr>
+      <td>17:00</td>
+      <td></td>
+      <td></td>
+	  <td></td>
+      <td></td>
+      <td></td>
+	  <td></td>
+      <td></td>
+</tr>
+  
+    <tr>
+      <td>18:30</td>
+      <td></td>
+      <td></td>
+	  <td></td>
+      <td></td>
+      <td></td>
+	  <td></td>
+      <td></td>
+</tr>
+  
+    <tr>
+      <td>19:00</td>
+      <td></td>
+      <td></td>
+	  <td></td>
+      <td></td>
+      <td></td>
+	  <td></td>
+      <td></td>
+</tr>
+  
+  <tr>
+      <td>19:30</td>
+      <td></td>
+      <td></td>
+	  <td></td>
+      <td></td>
+      <td></td>
+	  <td></td>
+      <td></td>
+</tr>
+  
+  <tr>
+      <td>20:00</td>
+      <td></td>
+      <td></td>
+	  <td></td>
+      <td></td>
+      <td></td>
+	  <td></td>
+      <td></td>
+</tr>
+  
+  <tr>
+      <td>20:30</td>
+      <td></td>
+      <td></td>
+	  <td></td>
+      <td></td>
+      <td></td>
+	  <td></td>
+      <td></td>
+</tr>
+  
+  <tr>
+      <td>21:00</td>
+      <td></td>
+      <td></td>
+	  <td></td>
+      <td></td>
+      <td></td>
+	  <td></td>
+      <td></td>
+</tr>
+  
+  <tr>
+      <td>21:30</td>
+      <td></td>
+      <td></td>
+	  <td></td>
+      <td></td>
+      <td></td>
+	  <td></td>
+      <td></td>
+</tr>
+</table>
+		
+	
+	  </body>
+	</html>

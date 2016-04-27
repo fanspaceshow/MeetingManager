@@ -1,0 +1,104 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>res_edit.html</title>
+</head>
+ <body>
+ <script type="text/javascript">
+ 	var winCommEdit = new Windows("roomdata_edit");
+ 	var oCommEdit = {
+ 		initForm : function(){
+ 			winCommEdit.find("#roomdataForm").form({
+ 				url:'$!basePath/meet/roomController/doEdit',
+ 				onSubmit: function(){
+			    	var pass = winCommEdit.find('#roomdataForm').form("validate");
+			    	if(pass){
+			    		winCommEdit.find("#ok").linkbutton("loading");
+			    	}
+			    	return pass; 
+			    },   
+			    success:function(data){
+			   		var result = jQuery.parseJSON(data);
+			   		if(result.success == true){
+			        	top.Notiy.success("修改成功!");
+			        	winCommEdit.setReturnValue(true);
+						winCommEdit.close();
+			        }else if(result.NoChanges){
+			        	top.Notiy.info("您未做任何修改!");
+						winCommEdit.close();			        	
+			        }else{
+			        	top.Dialog.alert("错误",result.error,"error");
+			        }
+
+			        winCommEdit.find("#ok").linkbutton("reset");
+			    }
+ 			});
+ 		},
+ 		ok : function(){
+ 			winCommEdit.find('#roomdataForm').submit();
+ 		},
+ 		cancel : function(){
+ 			winCommEdit.close();
+ 		}
+ 	};
+ 	$(function(){
+ 		var err=winCommEdit.find("#error").val();
+	 	if(err){
+	 		top.Notiy.success("系统数据不能修改!");
+			winCommEdit.setReturnValue(true);
+			winCommEdit.close();
+	 	}
+	 	oCommEdit.initForm();
+ 	});
+ </script>
+ <div class="easyui-layout" data-options="fit:true">
+	 <div data-options="region:'center',border:false">
+	 	<form id="roomdataForm" method="post" style="padding-top:10px;padding-left: 20px;">
+	 	<input type="hidden" name="id" value="$!pro.id"/>
+	 	<input type="hidden" id="error" value="$!error"/>
+	 		<table width="90%" >
+					<tr>
+						<td>会议室编号：</td>
+						<td>
+							<input type="text" class="easyui-validatebox" name="num" value="$!pro.num" maxlength="50" data-options="required:true" style="width: 90%;" />
+						</td>
+					</tr>
+					<tr>
+						<td>会议室名称：</td>
+						<td><input type="text" class="easyui-validatebox" name="name" value="$!pro.name" maxlength="50" data-options="required:true" style="width: 90%;" /></td>
+					</tr>
+					<tr>
+						 <td>位置：</td>
+						<td><input type="text" class="easyui-validatebox" name="addr" value="$!pro.addr" maxlength="50" data-options="required:true" style="width: 90%;" /></td>						
+					</tr>
+					<tr>
+						 <td>可用时间段：</td>
+						<td><input type="text" class="easyui-validatebox" name="timeperiod" value="$!pro.timeperiod" maxlength="50" data-options="required:true" style="width: 90%;" /></td>						
+					</tr>
+					<tr>
+						 <td>可用日期：</td>
+						<td><input type="text" class="easyui-validatebox" name="dateperiod" value="$!pro.dateperiod" maxlength="50" data-options="required:true" style="width: 90%;" /></td>						
+					</tr>
+					<tr>
+						 <td>会议室容量：</td>
+						<td><input type="text" class="easyui-validatebox" name="roomcapacity" value="$!pro.roomcapacity" maxlength="50" data-options="required:true" style="width: 90%;" /></td>						
+					</tr>
+					<tr>
+						<td>备注信息：</td>
+						<td><textarea class="easyui-textarea" rows="3" cols="21" name="remark" style="width: 90%;">$!pro.remark</textarea>
+						</td>						 
+					</tr>
+				</table>
+		</form>
+	 </div>
+	 <!--Change Button Text-->
+	 <div data-options="region:'south',border:false">
+	 	<div class="dialog-button">
+			<a id="ok" class="easyui-linkbutton" data-options="iconCls:'icon-ok'" href="javascript:void(0)" onclick="oCommEdit.ok()">确定</a>
+			<a id="cancel" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" href="javascript:void(0)" onclick="oCommEdit.cancel()">取消</a>
+		</div>
+	</div>
+ </div>
+  </body>
+</html>

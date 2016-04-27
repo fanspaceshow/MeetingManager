@@ -1,0 +1,17 @@
+package org.zframework.web.controller.admin.system;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+@Controller
+@RequestMapping("/meet/uploadController")
+public class UploadController {
+	
+	@RequestMapping(method = { RequestMethod.GET })
+	public String index(Model model) {
+		model.addAttribute("content", "hello model");
+		return "admin/system/updown/index";
+	}
+}

@@ -1,0 +1,558 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>res_list.html</title>
+	#style
+</head>
+ <body class="easyui-layout">
+ 
+ <script type="text/javascript">
+		var win_Add = new Windows("responsetable_add");
+		var win_Edit = new Windows("responsetable_edit");
+		
+		$(function() {
+			initDataGrid();
+			initWindows();
+			initToolbar();
+			_InitButtonPrrmission();
+
+          //默认当前日期
+		   var curr_time = new Date();
+	var strDate = curr_time.getFullYear()+"-";
+	  strDate += curr_time.getMonth()+1+"-";
+   strDate += curr_time.getDate();
+  
+   $("#dd").datebox("setValue", strDate); 
+
+		});
+		function initDataGrid(){
+				
+
+			$('#dgCommList').datagrid({
+				autoRowHeight : false,
+				collapsible : true,
+				url : '$!basePath/meet/roomController/roomdataList',
+				//sortName : 'id',
+				//sortOrder : 'asc',
+				remoteSort : true,
+				border : false,
+				fit : true,
+				striped:false,
+				idField : 'id',
+				
+				frozenColumns:[[
+	                <!--{field:'ck',checkbox:true},-->
+	                {title:'会议室',field:'name',width:70,sortable:true,
+					formatter : function(value, row, index){
+						
+					return highShowSearch($("#dgCommList"),"name", value) ;
+                  <!--  return '<a href="#" onclick="constructionManager(\'' + row.id+ '\')">'+highShowSearch($("#dgCommList"),"name", value)+'</a>' ;-->
+					
+					}
+					}
+				]], 
+				columns:[[
+					{
+						field : 'id',
+						title : '7点前',
+						width : 40,
+						
+						formatter : function(value, row, index){
+						return "";
+						}
+					},
+					{
+						field : 'id2',
+						title : '07',
+						width : 25,
+						
+						formatter : function(value, row, index){
+						return "";
+						}
+					},
+					{
+						field : 'addr',
+						title : ' ',
+						width : 25,
+						 styler: function (value, row, index) {
+							
+                                if (highShowSearch($("#dgCommList"),"addr", value)==1)
+                                {
+									return 'background-color:gray;color:white';
+                                }
+							
+							
+							 },
+						
+						formatter : function(value, row, index){
+						
+						return "";
+						}
+					},
+					{
+						field : 'addr3',
+						title : '08',
+						width : 25,
+						
+						
+						formatter : function(value, row, index){
+						return "";
+						}
+					},
+					{
+						field : 'addr4',
+						title : ' ',
+						width : 25,
+						
+						
+						formatter : function(value, row, index){
+						return "";
+						}
+					},
+					{
+						field : 'addr5',
+						title : '09',
+						width : 25,
+						
+						
+						formatter : function(value, row, index){
+						return "";
+						}
+					},
+					{
+						field : 'addr6',
+						title : ' ',
+						width : 25,
+						
+						
+						formatter : function(value, row, index){
+						return "";
+						}
+					},
+					{
+						field : 'addr7',
+						title : '10',
+						width : 25,
+						
+						
+						formatter : function(value, row, index){
+						return "";
+						}
+					},
+					{
+						field : 'addr8',
+						title : ' ',
+						width : 25,
+						
+						
+						formatter : function(value, row, index){
+						return "";
+						}
+					},
+					{
+						field : 'addr9',
+						title : '11',
+						width : 25,
+						
+						
+						formatter : function(value, row, index){
+						return "";
+						}
+					},
+					{
+						field : 'addr10',
+						title : ' ',
+						width : 25,
+						
+						
+						formatter : function(value, row, index){
+						return "";
+						}
+					},
+					{
+						field : 'addr11',
+						title : '12',
+						width : 25,
+						
+						
+						formatter : function(value, row, index){
+						return "";
+						}
+					},
+					{
+						field : 'addr12',
+						title : ' ',
+						width : 25,
+						
+						
+						formatter : function(value, row, index){
+						return "";
+						}
+					},
+					{
+						field : 'addr13',
+						title : '13',
+						width : 25,
+						
+						
+						formatter : function(value, row, index){
+						return "";
+						}
+					},
+					{
+						field : 'addr14',
+						title : ' ',
+						width : 25,
+						
+						formatter : function(value, row, index){
+						return "";
+						}
+					},
+					{
+						field : 'addr15',
+						title : '14',
+						width : 25,
+						
+						
+						formatter : function(value, row, index){
+						return "";
+						}
+					},
+					{
+						field : 'addr16',
+						title : ' ',
+						width : 25,
+						
+						
+						formatter : function(value, row, index){
+						return "";
+						}
+					},
+					{
+						field : 'addr17',
+						title : '15',
+						width : 25,
+						
+						
+						formatter : function(value, row, index){
+						return "";
+						}
+					},
+					{
+						field : 'addr18',
+						title : ' ',
+						width : 25,
+						
+						
+						formatter : function(value, row, index){
+						return "";
+						}
+					},
+					{
+						field : 'addr19',
+						title : '16',
+						width : 25,
+						
+						
+						formatter : function(value, row, index){
+						return "";
+						}
+					},
+					{
+						field : 'addr20',
+						title : ' ',
+						width : 25,
+						
+						
+						formatter : function(value, row, index){
+						return "";
+						}
+					},
+					{
+						field : 'addr21',
+						title : '17',
+						width : 25,
+						
+						
+						formatter : function(value, row, index){
+						return "";
+						}
+					},
+					{
+						field : 'addr22',
+						title : ' ',
+						width : 25,
+						
+						
+						formatter : function(value, row, index){
+						return "";
+						}
+					},
+					{
+						field : 'addr23',
+						title : '18',
+						width : 25,
+						
+						
+						formatter : function(value, row, index){
+						return "";
+						}
+					},
+					{
+						field : 'addr24',
+						title : ' ',
+						width : 25,
+						
+						
+						formatter : function(value, row, index){
+						return "";
+						}
+					},
+                    {
+						field : 'addr25',
+						title : '19',
+						width : 25,
+						
+						
+						formatter : function(value, row, index){
+						return "";
+						}
+					},
+					{
+						field : 'addr26',
+						title : ' ',
+						width : 25,
+						
+						
+						formatter : function(value, row, index){
+						return "";
+						}
+					},
+					{
+						field : 'addr27',
+						title : '20',
+						width : 25,
+						
+						
+						formatter : function(value, row, index){
+						return "";
+						}
+					},
+					{
+						field : 'addr28',
+						title : ' ',
+						width : 25,
+						
+						
+						formatter : function(value, row, index){
+						return "";
+						}
+					},
+					{
+						field : 'addr29',
+						title : '21',
+						width : 25,
+						
+						
+						formatter : function(value, row, index){
+						return "";
+						}
+					},
+					{
+						field : 'addr30',
+						title : ' ',
+						width : 25,
+						
+						
+						formatter : function(value, row, index){
+						return "";
+						}
+					},
+					{
+						field : 'addr31',
+						title : '22',
+						width : 25,
+						
+						
+						formatter : function(value, row, index){
+						return "";
+						}
+					},
+					{
+						field : 'addr32',
+						title : '22点后',
+						width : 45,
+						
+						
+						formatter : function(value, row, index){
+						return "";
+						}
+					
+				
+					
+					}
+					]],
+					pagination : true,
+					rownumbers : true,
+					toolbar : '#dgCommList-toolbar',
+					onRowContextMenu : function(e, rowindex, rowData) {
+
+						rowContentMenuShowHandler(e, rowindex, rowData,"dgCommList", "dgCommList_rowContextMenu");
+					}
+				/*,onDblClickRow:function(value, row, index){
+					
+					win_Edit.windows({href:"$!basePath/meet/responseController/edit/"+row.id});
+					win_Edit.windows("open");
+				}*/
+                     
+
+				});
+				//双击事件
+				//dclick();
+		}
+		function initWindows() {
+			win_Add.windows({
+				title : "新增会议响应",
+				width : 630,
+				height : 470,
+				modal : true,
+				cache : false,
+				closed : true,
+				iconCls : 'icon-assets-computer-add',
+				href : "$!basePath/meet/responseController/add",
+				onClose : function() {
+					if (win_Add.getReturnValue() == "true") {
+						$('#dgCommList').datagrid("reload");
+					}
+				}
+			});
+			win_Edit.windows({
+				title : "编辑会议响应",
+				width : 350,
+				height : 390,
+				modal : true,
+				cache : false,
+				closed : true,
+				iconCls : 'icon-assets-computer-edit',
+				href : "$!basePath/meet/responseController/edit",
+				onClose : function() {
+					if (win_Edit.getReturnValue() == "true") {
+						$('#dgCommList').datagrid("reload");
+					}
+				}
+			});
+		}
+
+		function rowContentMenuClickHandler(item) {
+			ContentMenuClickHandler("dgCommList", item);
+		}
+		function initToolbar() {
+			$("#btnAdd").click(function() {
+				win_Add.open();
+			});
+			$("#btnEdit").click(function(id) {
+					var selectRows = $("#dgCommList").datagrid("getSelected");
+					if(!selectRows){
+						top.Notiy.warning("请选择要编辑的项");
+					}else{
+							$.ajax({
+  							type: 'POST',
+  							url: "$!basePath/meet/responseController/"+selectRows.id,
+  							success: function(data){  				 			
+			   					win_Edit.windows({href:"$!basePath/meet/responseController/edit/"+selectRows.id});
+								win_Edit.windows("open");		   			 	
+  						}
+					});
+				}
+			});
+			$("#btnRemove").attr("deleteUrl","$!basePath/meet/responseController/doDelete");
+			$("#btnRemove").click(function() {
+				DataGridUtil.Delete("$!basePath/meet/responseController/doDelete","dgCommList");
+			});
+			
+			
+		}
+		//右键菜单中修改的触发事件
+		function doEditForContentMenu_btnEdit(id){
+			$.ajax({
+  			type: 'POST',
+  			url: "$!basePath/meet/roomController/"+id,
+  			success: function(data){
+  				 var result = jQuery.parseJSON(data);
+  				 
+			   		if(result.isType){
+			   			top.Notiy.warning("系统数据不允许修改");
+			   		}else{
+			   			win_Edit.windows({href:"$!basePath/meet/responseController/edit/"+id});
+						win_Edit.windows("open");
+			   		}
+  				}
+			});
+			
+		}
+		function doSearch(v, n) {
+			doDataGridSearch("dgCommList", n, v);
+		}
+		
+		//add in 20160407 by ftm
+		function dclick(){
+		   console.log($("div.datagrid-view").find("tr"))
+		   $("div.datagrid-view").find("tr").dblclick(function() {
+		   console.log("dclick")
+             alert( "Handler for .dblclick() called." );
+           });
+		}		
+	</script>
+	<div data-options="region:'center',border:true">
+		<table id="dgCommList"></table>
+	</div>
+	<!--Tools And ContextMenu-->
+	<div id="dgCommList-toolbar" style="padding:2px 0;"
+		class="datagrid-toolbar">
+		<table cellpadding="0" cellspacing="0" style="width:100%">
+			
+			<tr>
+				<td style="padding-left:2px">
+					
+				  <a id="btnAdd" href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-assets-computer-add',plain:true" style="float: left;">发起会议</a>
+					<a id="btnEdit" href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-assets-computer-edit',plain:true" style="float: left;">修改</a>
+					 <a id="btnRemove" href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-assets-computer-delete',plain:true" style="float: left;">删除</a>
+		<a id="btnRemove" href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-assets-computer-delete',plain:true" style="float: left;" onclick="dclick()">console</a>
+				</td>
+				<td style="text-align:right;padding-right:2px">
+					<input id="ss" style="width:240px;" class="easyui-searchbox" data-options="searcher:doSearch,prompt:'请输入查询内容',menu:'#ss_mm'"></input>
+					<div id="ss_mm" style="width:80px;">
+						<div data-options="name:'id'">id</div>
+						<div data-options="name:'key'">标识</div>
+						<div data-options="name:'value'">值</div>
+					</div>
+				</td>
+				
+			</tr>
+			
+		</table>
+		<table cellpadding="0" cellspacing="0" style="width:100%">
+			<tr>
+				<td>
+				<input class="easyui-datebox" id="dd">
+				</td>
+			</tr>
+		</table>
+	</div>
+	
+	<!-- 右键菜单 -->
+	<div id="dgCommList_rowContextMenu" data-options="onClick:rowContentMenuClickHandler" class="easyui-menu" style="width:120px;">
+		<div name="select" data-options="iconCls:'icon-ok'">选中</div>
+		<div name="edit" data-options="iconCls:'icon-datadict-edit'" with="btnEdit">修改</div>
+		<div name="remove" data-options="iconCls:'icon-datadict-delete'" with="btnRemove">删除此参数</div>
+		<div name="removeSelected" data-options="iconCls:'icon-datadict-delete'" with="btnRemove">删除已选中参数</div>
+	</div>
+  </body>
+  <script type="text/javascript">
+  $(document).ready(function(){  
+     
+   }
+  )
+  </script>
+</html>

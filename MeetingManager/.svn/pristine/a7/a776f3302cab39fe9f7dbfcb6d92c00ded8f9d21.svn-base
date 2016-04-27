@@ -1,0 +1,55 @@
+package org.zframework.web.service.admin.system;
+
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import net.sf.json.JSONObject;
+import org.springframework.stereotype.Service;
+import org.zframework.core.support.ApplicationCommon;
+import org.zframework.core.util.ObjectUtil;
+import org.zframework.core.web.support.WebResult;
+import org.zframework.web.entity.system.RichTextData;
+import org.zframework.web.entity.system.User;
+import org.zframework.web.service.BaseService;
+
+@Service
+public class RichTextService extends BaseService<RichTextData>{
+	/**
+	 * 初始化数据字典
+	 * 将数据库中的数据项加载到系统内存中
+	 */
+	public void InitPros(){
+		//获取数据库中所有的数据项
+		List<RichTextData> list = list();
+		ApplicationCommon.SYSCOMMONS.clear();
+		if(ObjectUtil.isNotNull(list)){
+			for(RichTextData richtext : list){
+				ApplicationCommon.SYSCOMMONS.put(richtext.getRichtext(), richtext.getRichtext());
+			}
+		}
+}
+	
+	
+	/***
+	 * 执行增加
+	 * @param request
+	 * @param comm
+	 * @param result
+	 * @param user
+	 * */
+	public JSONObject executeAdd(HttpServletRequest request, RichTextData pro,User user) {
+		RichTextData proByKey=this.getByProperties("id",pro.getId());
+		if(ObjectUtil.isNotNull(proByKey)){
+			
+			return WebResult.error("标识已经存在!");
+		}else{
+			save(pro);
+			//更新缓存
+			if(ObjectUtil.isNull(ApplicationCommon.SYSCOMMONS.get(pro.getRichtext()))){
+				ApplicationCommon.SYSCOMMONS.put(pro.getRichtext(),pro.getRichtext());
+			}
+			
+			return WebResult.success();
+		}
+	}
+}

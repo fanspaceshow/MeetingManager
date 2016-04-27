@@ -1,0 +1,8 @@
+eclipse.preferences.version=1
+encoding//src/org/zframework/conf/jdbc_mysql.properties=UTF-8
+encoding//src/org/zframework/conf/jdbc_oracle.properties=UTF-8
+encoding//src/org/zframework/conf/log4j.properties=UTF-8
+encoding//webapps/WEB-INF/tpl/admin/system/calendar/index3.html=UTF-8
+encoding//webapps/WEB-INF/tpl/admin/system/calendar/index_1.html=UTF-8
+encoding//webapps/WEB-INF/tpl/globals/tpl_library.html=UTF-8
+encoding/<project>=UTF-8
