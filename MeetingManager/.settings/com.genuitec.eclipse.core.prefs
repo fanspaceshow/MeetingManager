@@ -1,4 +1,4 @@
-#Mon Apr 25 09:03:42 CST 2016
+#Thu Apr 28 22:40:26 CST 2016
 eclipse.preferences.version=1
-validator.Checked=webapps/resources/framework/flash/fusionCharts,src/org/zframework,webapps/resources/framework/application
+validator.Checked=webapps/WEB-INF/tpl/admin/system/response,webapps/WEB-INF/tpl/admin/system/updown/index.html,webapps/WEB-INF/tpl/admin/system/chart,webapps/WEB-INF/tpl/admin/system/login.html,webapps/WEB-INF/tpl/admin/system/richtext,webapps/resources/framework/flash/fusionCharts,webapps/WEB-INF/tpl/admin/system/meettable,webapps/WEB-INF/tpl/admin/system/res,src/org/zframework,webapps/resources/framework/application,webapps/WEB-INF/tpl/admin/system/calendar
 validator.Unchecked=

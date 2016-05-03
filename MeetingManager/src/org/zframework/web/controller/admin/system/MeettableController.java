@@ -1,16 +1,20 @@
 package org.zframework.web.controller.admin.system;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +25,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.zframework.core.util.ObjectUtil;
 import org.zframework.core.web.support.ControllerCommon;
 import org.zframework.core.web.support.WebResult;
@@ -194,20 +201,19 @@ public class MeettableController extends BaseController<Meettable>{
 	 * @param response
 	 * @return
 	 */
-	@RequestMapping(value="/uploaddo",method={RequestMethod.POST})
+		@RequestMapping(value="/uploaddo",method={RequestMethod.POST})
 	@ResponseBody
 	public JSONObject uploadFile(HttpServletRequest request, HttpServletResponse response) {
+		System.out.println("into uploadfile controller");
 		String realPath = uploadService.upload(request, response);
 		JSONObject jNode = new JSONObject();
 		jNode.element("path", realPath);
 		System.out.println(realPath);
-		return jNode;
-	/*	Meettable meettable = new Meettable();
-		meettable.setAttachmentpath(realPath);
-		return roomarrservice.executeEdit(request, meettable, this.getCurrentUser());*/
+		return jNode;	
 	}
+		
 	
 	public void downloadFile(){
-		
+						
 	}
 }

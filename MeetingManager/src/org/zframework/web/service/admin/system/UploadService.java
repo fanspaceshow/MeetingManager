@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -15,6 +17,9 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 public class UploadService {
 
 	public String upload(HttpServletRequest request, HttpServletResponse response) {
+		System.out.println("into upload service");
+		boolean isMultipart = ServletFileUpload.isMultipartContent(request);
+		System.out.println("ismultipart : "+isMultipart);
  		   //转换请求request	
 		MultipartHttpServletRequest multipartHttpservletRequest = (MultipartHttpServletRequest) request;
 		//接收那么=uploadFile的文件

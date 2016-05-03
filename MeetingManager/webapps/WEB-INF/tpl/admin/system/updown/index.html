@@ -6,10 +6,9 @@
 
 </head>
 <body>
-	
-<!--<script type="text/javascript" src="$!basePath/framework/js/common/jquery-1.8.2.min.js"></script>
-<script type="text/javascript" src="$!basePath/framework/js/common/jquery.easyui.min.js"></script>-->
-
+<!--<script type="text/javascript" src="$!basePath/framework/js/common/jquery.easyui.min.js"></script>	
+<script type="text/javascript" src="$!basePath/framework/js/common/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="$!basePath/framework/js/common/jquery.ajaxfileupload.js"></script>-->
 <link href="$!basePath/framework/css/buttons.css" rel="stylesheet" type="text/css"/>
 <style type="text/css">
 input:hover{
@@ -35,6 +34,8 @@ $(document).ready(
 	};
 	 console.log(inputfile[0].size)  
 	 if(!(inputfile[0].size>800000000)){
+	 //上传文件
+	 upload1();
 	 //进度条功能开始运行，读取进度。
 	   start();
 	 //获取上传附件的路径
@@ -73,7 +74,7 @@ $(document).ready(
 		};
 		
 		 
-function setpath(){
+/*function setpath(){
 		   var value = $("pre",window.frames["aa"].document).html()
 		   if(value==undefined){
 		      setTimeout(function(){setpath()}, 300);
@@ -81,10 +82,35 @@ function setpath(){
 		   value = jQuery.parseJSON(value)
 		   console.log(value.path)
 		   sessionStorage.setItem("key", value.path);
-		}
+		}*/
+</script>
+
+<script type="text/javascript">
+    function upload1() {  
+            var hideForm = $('#insertPicForm');
+            var options = {                
+                beforeSubmit : function() {  
+                    alert("正在上传");  
+                },  
+                success : function(result) {
+                    console.log(result)				
+                    alert('成功上传！');  
+                      
+                },  
+                error : function(result) {  
+                    alert("失败") 
+                },
+                complete: function(data) {
+		            console.log(data)
+					alert("complete")
+	           }				
+            };  
+            hideForm.ajaxForm(options);  
+            return true;  
+        }  
 </script>
 <div class="file-box">
-<form id="form1" method="post" enctype="multipart/form-data" method="post" action="$!basePath/meet/roomarrController/uploaddo" target="aa">
+<form id="insertPicForm" enctype="multipart/form-data" method="post" action="$!basePath/meet/roomarrController/uploaddo" target="aa">
 <table>
 <tr>
   <td>
@@ -106,3 +132,26 @@ function setpath(){
 <div id="p" class="easyui-progressbar" style="width:400px;"></div>
 </body>
 </html> 
+
+<!-- 
+
+<div class="file-box">
+<form id="form1" method="post" enctype="multipart/form-data" method="post" action="$!basePath/meet/roomarrController/uploaddo" target="aa">
+<table>
+<tr>
+  <td>
+   <input type="text" name="uploadFile" id='textfield' readonly>
+  </td>
+  <td>
+    <input type='button' class='button button-primary button-rounded button-small' value='浏览...' />
+    <input type="file" name="fileField" class="file" id="fileField" size="800000000" onchange="document.getElementById('textfield').value=this.value"/>
+  </td>
+  <td>
+	<input id="upload" type="submit" name="submit" class="button button-primary button-rounded button-small" value="上传" />
+  </td>
+	</tr>
+	</table>
+</form>
+</div>
+
+-->

@@ -6,7 +6,9 @@ Target Host     : localhost:3306
 Target Database : meetingmanager
 Date: 2016-04-27 09:19:16
 */
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`meetingmanager` /*!40100 DEFAULT CHARACTER SET utf8 */;
 
+USE `meetingmanager`;
 SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 -- Table structure for ro_factorydata
